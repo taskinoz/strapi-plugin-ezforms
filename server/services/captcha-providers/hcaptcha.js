@@ -1,10 +1,6 @@
 'use strict'
 const axios = require('axios')
 
-const invertScore = (score) => {
-  return (1 - score).toFixed(2)
-}
-
 module.exports = ({strapi}) => ({
   async validate(token) {
     if (!token) {
@@ -40,10 +36,8 @@ module.exports = ({strapi}) => ({
         code: 500
       }
     }
-    
-    const hcaptcha_score = invertScore(hcaptcha_verify.data.score)
 
-    if (hcaptcha_score < strapi.config.get('plugin.ezforms.captchaProvider.config.score')) {
+    if (hcaptcha_verify.data.score < strapi.config.get('plugin.ezforms.captchaProvider.config.score')) {
       return {
 
         valid: false,
@@ -53,7 +47,7 @@ module.exports = ({strapi}) => ({
       }
     }
     return {
-      score: hcaptcha_score,
+      score: hcaptcha_verify.data.score,
       valid: true
     }
   },
