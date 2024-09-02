@@ -25,3 +25,15 @@ captchaProvider: {
   }
 },
 ```
+
+## hCaptcha
+
+```
+captchaProvider: {
+  name: 'hcaptcha',
+  config: {
+    secretKey: 'your-key',
+    minimumScore: 0.5
+  }
+},
+```
