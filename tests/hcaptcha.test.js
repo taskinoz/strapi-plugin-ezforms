@@ -1,8 +1,8 @@
-const recaptcha = require('../server/services/captcha-providers/hcaptcha')
+const hcaptcha = require('../server/services/captcha-providers/hcaptcha')
 const axios = require('axios')
 
 
-describe('Recaptcha Captcha Provider', function () {
+describe('hCaptcha Captcha Provider', function () {
   let strapi
 
   beforeEach(async function () {
@@ -18,7 +18,7 @@ describe('Recaptcha Captcha Provider', function () {
   })
 
   test('should return error if no token is provided', async function () {
-    let result = await recaptcha({strapi}).validate()
+    let result = await hcaptcha({strapi}).validate()
 
     expect(result).toEqual({
       valid: false,
@@ -31,7 +31,7 @@ describe('Recaptcha Captcha Provider', function () {
 
     jest.spyOn(axios, 'post').mockRejectedValueOnce(new Error('Unable to verify captcha'))
 
-    let result = await recaptcha({strapi}).validate('fakeToken')
+    let result = await hcaptcha({strapi}).validate('fakeToken')
 
     await expect(result).toEqual({
       valid: false,
@@ -49,7 +49,7 @@ describe('Recaptcha Captcha Provider', function () {
       }
     })
 
-    let result = await recaptcha({strapi}).validate('fakeToken')
+    let result = await hcaptcha({strapi}).validate('fakeToken')
 
     await expect(result).toEqual({
       valid: false,
@@ -70,7 +70,7 @@ describe('Recaptcha Captcha Provider', function () {
       return .5
     })
 
-    let result = await recaptcha({strapi}).validate('fakeToken')
+    let result = await hcaptcha({strapi}).validate('fakeToken')
 
     await expect(result).toEqual({
 
@@ -93,7 +93,7 @@ describe('Recaptcha Captcha Provider', function () {
       return .5
     })
 
-    let result = await recaptcha({strapi}).validate('fakeToken')
+    let result = await hcaptcha({strapi}).validate('fakeToken')
 
     await expect(result).toEqual({
       score: .8,
